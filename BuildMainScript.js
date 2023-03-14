@@ -1,10 +1,8 @@
 var brickmodule = require("./add_remove_brick.js") //module that deals with a lot of spaghetti code so i didn't copy it everywhere
 
 const MaxPlates = 9
-//const MaxBricks = 1000
+const MaxBricks = 1000
 
-const brickTShirt=147324
-const modelTShirt=167241
 
 //tools now at the TOP of the script because it was creating new tool instances everytime someone joined which would eventually out of memory the server...
 //create tool
@@ -224,13 +222,8 @@ Game.on("playerJoin", async(player) => {
 	player.bricks=[]
 	player.corner1=player.plate.plate.position
 	player.corner2=new Vector3(player.plate.plate.position.x+player.plate.plate.scale.x-1, player.plate.plate.position.y+player.plate.plate.scale.y-1, 0)
-	//t shirt stuff
-	player.ownsTShirt=await player.ownsAsset(brickTShirt)
-	player.ownsModelTShirt=await player.ownsAsset(modelTShirt)
 
-	if (player.ownsTShirt || Game.local) {
-		player.maxBricks=Game.settings.maxBricks*2
-	} else player.maxBricks=Game.settings.maxBricks
+	player.maxBricks=MaxBricks
 
 	//give admins infinite bricks to use :)
 	if (Game.ADMINS.includes(player.userId)) {
